@@ -15,12 +15,12 @@ If you find RON useful in your research, please consider citing:
 
 ### PASCAL VOC detection results
 
-Method         | VOC 2007 mAP | VOC 2012 mAP 
--------------- |:------------:|:------------:
-Fast R-CNN     |   70.0%      |   68.4%        
-Faster R-CNN   |   73.2%      |   70.4%        
-SSD300         |   72.1%      |   70.3%
-SSD500         |   75.1%      |   73.1%
-RON320         |   74.2%      |   71.7%        
-RON384         |   75.4%      |   73.0%        
+Method         | VOC 2007 mAP | VOC 2012 mAP | Input resolution
+-------------- |:------------:|:------------:|:----------------
+Fast R-CNN     |   70.0%      |   68.4%      |  1000*600     
+Faster R-CNN   |   73.2%      |   70.4%      |  1000*600
+SSD300         |   72.1%      |   70.3%      |  300*300
+SSD500         |   75.1%      |   73.1%      |  500*500
+RON320         |   74.2%      |   71.7%      |  320*320
+RON384         |   75.4%      |   73.0%      |  384*384
 
