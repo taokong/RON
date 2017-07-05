@@ -24,3 +24,12 @@ SSD500         |   75.1%      |   73.1%      |  500*500
 RON320         |   74.2%      |   71.7%      |  320*320
 RON384         |   75.4%      |   73.0%      |  384*384
 
+### MS COCO detection results
+
+Method         | Training data | AP(0.50-0.95)| Input resolution
+-------------- |:-------------:|:------------:|:----------------
+Faster R-CNN   |   trainval    |   21.9%      |  1000*600
+SSD500         |   trainval35k |   24.4%      |  500*500
+RON320         |   trainval    |   23.6%      |  320*320
+RON384         |   trainval    |   25.4%      |  384*384
+
