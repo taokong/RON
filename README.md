@@ -46,7 +46,7 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 1. Build Caffe and pycaffe
     cd $RON_ROOT/caffe-fast-rcnn
     make -j8 && make pycaffe
-    # this version use CUDNN for efficiency, so make sure that "USE_CUDNN := 1" in the Makefile.config file.
+    *this version use CUDNN for efficiency, so make sure that "USE_CUDNN := 1" in the Makefile.config file.
 
 2. installation for training and testing models on PASCAL VOC dataset
     2.0 The PASCAL VOC dataset has the basic structure:
