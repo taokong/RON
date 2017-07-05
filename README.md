@@ -83,7 +83,7 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 
 4. Train with PASCAL VOC datset
 
-    Please download ImageNet-pre-trained VGG models manually from [BaiduYun](https://pan.baidu.com/share/home?uk=1647172703#category/type=0), and put them into `$data/ImageNet_models`. Then everything is done, you could train your own model.
+    Please download ImageNet-pre-trained VGG models manually from [BaiduYun](https://pan.baidu.com/s/1qYkCAb6), and put them into `$data/ImageNet_models`. Then everything is done, you could train your own model.
 
     4.0 The original model as introduced in the RON paper: 
     
