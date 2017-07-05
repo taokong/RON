@@ -40,24 +40,32 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 ### RON Installation 
 
 0. Build the Cython modules
+    ```
     cd $RON_ROOT/lib
     make
+    ```
 
 1. Build Caffe and pycaffe
+    ```
     cd $RON_ROOT/caffe-fast-rcnn
     make -j8 && make pycaffe
     *this version use CUDNN for efficiency, so make sure that "USE_CUDNN := 1" in the Makefile.config file.
-
+    ```
+    
 2. installation for training and testing models on PASCAL VOC dataset
+
     2.0 The PASCAL VOC dataset has the basic structure:
+        ```
         $VOCdevkit/                           # development kit
         $VOCdevkit/VOCcode/                   # VOC utility code
         $VOCdevkit/VOC2007                    # image sets, annotations, etc.
-        
+        ```
     2.1 Create symlinks for the PASCAL VOC dataset
+        ```
         cd $RON_ROOT/data
         ln -s $VOCdevkit VOCdevkit2007
         ln -s $VOCdevkit VOCdevkit2012
+        ```
 
 3. Test with PASCAL VOC datset
     Now we provide two models for testing the pascal voc 2007 test dataset.
