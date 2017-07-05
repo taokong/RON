@@ -1,5 +1,6 @@
 # RON: Reverse Connection with Objectness Prior Networks for Object Detection
-RON is a state-of-the-art visual object detection system for efficient object detection framework. The code is modified from py-faster-rcnn and caffe. You can use the code to train/evaluate a network for object detection task. For more details, please refer to our arXiv paper and our slide.
+
+RON is a state-of-the-art visual object detection system for efficient object detection framework. The code is modified from py-faster-rcnn. You can use the code to train/evaluate a network for object detection task. For more details, please refer to our arXiv paper.
 
 ### Citing RON
 
@@ -33,6 +34,7 @@ SSD500         |   trainval35k |   24.4%      |  500*500
 RON320         |   trainval    |   23.6%      |  320*320
 RON384         |   trainval    |   25.4%      |  384*384
 
+Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/pdf/1512.02325v2.pdf).
 
 ## TODO
 Codes are coming soon.
