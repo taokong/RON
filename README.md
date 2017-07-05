@@ -46,6 +46,7 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
     ```
 
 1. Build Caffe and pycaffe
+
     ```
     cd $RON_ROOT/caffe-fast-rcnn
     make -j8 && make pycaffe
@@ -55,12 +56,15 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 2. installation for training and testing models on PASCAL VOC dataset
 
     2.0 The PASCAL VOC dataset has the basic structure:
+    
         ```
         $VOCdevkit/                           # development kit
         $VOCdevkit/VOCcode/                   # VOC utility code
         $VOCdevkit/VOC2007                    # image sets, annotations, etc.
         ```
+        
     2.1 Create symlinks for the PASCAL VOC dataset
+    
         ```
         cd $RON_ROOT/data
         ln -s $VOCdevkit VOCdevkit2007
@@ -70,17 +74,32 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 3. Test with PASCAL VOC datset
     Now we provide two models for testing the pascal voc 2007 test dataset.
     3.0 The original model as introduced in the RON paper: 
+    
+        ```
         ./test_voc07.sh
         # The final result of the model should be 74.2% mAP.
+        ```
+        
     3.1 A lite model we make some optimization after the original one:
+    
+        ```
         ./test_voc07_reduced.sh
         # The final result of the model should be 74.1% mAP.
+        ```
 
 4. Train with PASCAL VOC datset
     4.0 The original model as introduced in the RON paper: 
+    
+        ```
         ./train_voc.sh
+        ```
+        
     4.1 A lite model we make some optimization after the original one:
+        
+        ```
         ./train_voc_reduced.sh
+        ```
+        
 ## TODO
 Codes are coming soon.
 
