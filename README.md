@@ -69,7 +69,7 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 
 3. Test with PASCAL VOC datset
 
-    Now we provide two models for testing the pascal voc 2007 test dataset.
+    Now we provide two models for testing the pascal voc 2007 test dataset. To use demo you need to download the pretrained RON model, please download the model manually from [BaiduYun](https://pan.baidu.com/share/home?uk=1647172703#category/type=0), and put it under `$data/RON_models`.
     
     3.0 The original model as introduced in the RON paper: 
     
@@ -82,6 +82,8 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
         # The final result of the model should be 74.1% mAP.
 
 4. Train with PASCAL VOC datset
+
+    Please download ImageNet-pre-trained VGG models manually from [BaiduYun](https://pan.baidu.com/share/home?uk=1647172703#category/type=0), and put them into `$data/ImageNet_models`. Then everything is done, you could train your own model.
 
     4.0 The original model as introduced in the RON paper: 
     
