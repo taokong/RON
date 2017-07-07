@@ -39,60 +39,67 @@ Note: SSD300 and SSD500 are the original SSD model from [SSD](https://arxiv.org/
 
 ### RON Installation 
 
-0. Build the Cython modules
+0. Clone the RON repository
+    ```
+    git clone https://github.com/taokong/RON.git
+
+    ```
+1. Build Caffe and pycaffe
+
+    ```
+    cd $RON_ROOT/
+    git clone https://github.com/taokong/caffe-ron.git
+    cd caffe-ron
+    make -j8 && make pycaffe
+    *this version use CUDNN for efficiency, so make sure that "USE_CUDNN := 1" in the Makefile.config file.
+    ```
+
+2. Build the Cython modules
     ```
     cd $RON_ROOT/lib
     make
     ```
-
-1. Build Caffe and pycaffe
-
-    ```
-    cd $RON_ROOT/caffe-fast-rcnn
-    make -j8 && make pycaffe
-    *this version use CUDNN for efficiency, so make sure that "USE_CUDNN := 1" in the Makefile.config file.
-    ```
     
-2. installation for training and testing models on PASCAL VOC dataset
+3. installation for training and testing models on PASCAL VOC dataset
 
-    2.0 The PASCAL VOC dataset has the basic structure:
+    3.0 The PASCAL VOC dataset has the basic structure:
     
         $VOCdevkit/                           # development kit
         $VOCdevkit/VOCcode/                   # VOC utility code
         $VOCdevkit/VOC2007                    # image sets, annotations, etc.
         
-    2.1 Create symlinks for the PASCAL VOC dataset
+    3.1 Create symlinks for the PASCAL VOC dataset
     
         cd $RON_ROOT/data
         ln -s $VOCdevkit VOCdevkit2007
         ln -s $VOCdevkit VOCdevkit2012
 
-3. Test with PASCAL VOC datset
+4. Test with PASCAL VOC datset
 
     Now we provide two models for testing the pascal voc 2007 test dataset. To use demo you need to download the pretrained RON model, please download the model manually from [BaiduYun](https://pan.baidu.com/share/home?uk=1647172703#category/type=0), and put it under `$data/RON_models`.
     
-    3.0 The original model as introduced in the RON paper: 
+    4.0 The original model as introduced in the RON paper: 
     
         ./test_voc07.sh
         # The final result of the model should be 74.2% mAP.
         
-    3.1 A lite model we make some optimization after the original one:
+    4.1 A lite model we make some optimization after the original one:
 
         ./test_voc07_reduced.sh
         # The final result of the model should be 74.1% mAP.
 
-4. Train with PASCAL VOC datset
+5. Train with PASCAL VOC datset
 
     Please download ImageNet-pre-trained VGG models manually from [BaiduYun](https://pan.baidu.com/s/1qYkCAb6), and put them into `$data/ImageNet_models`. Then everything is done, you could train your own model.
 
-    4.0 The original model as introduced in the RON paper: 
+    5.0 The original model as introduced in the RON paper: 
     
         ./train_voc.sh
         
-    4.1 A lite model we make some optimization after the original one:
+    5.1 A lite model we make some optimization after the original one:
 
         ./train_voc_reduced.sh
         
 ## TODO
-Codes are coming soon.
+Traning code will come soon.
 
