@@ -3,7 +3,7 @@
 RON is a state-of-the-art visual object detection system for efficient object detection framework. 
 The code is modified from [py-faster-rcnn](https://github.com/rbgirshick/py-faster-rcnn). 
 You can use the code to train/evaluate a network for object detection task. 
-For more details, please refer to our CVPR paper.
+For more details, please refer to our [CVPR paper](http://openaccess.thecvf.com/content_cvpr_2017/papers/Kong_RON_Reverse_Connection_CVPR_2017_paper.pdf).
 
 ### Citing RON
 
