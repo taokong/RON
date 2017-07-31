@@ -16,8 +16,12 @@ import caffe, os, sys, cv2
 import argparse
 from fast_rcnn.bbox_transform import clip_boxes, filter_boxes
 
-CLASSES = ('__background__', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush')
-
+CLASSES = ('__background__', # always index 0
+                         'aeroplane', 'bicycle', 'bird', 'boat',
+                         'bottle', 'bus', 'car', 'cat', 'chair',
+                         'cow', 'diningtable', 'dog', 'horse',
+                         'motorbike', 'person', 'pottedplant',
+                         'sheep', 'sofa', 'train', 'tvmonitor');
 
 def detect(net, im):
     # Detect all object classes and regress object bounds
@@ -77,8 +81,8 @@ if __name__ == '__main__':
     top_N = 30
     max_score = 0.6
 
-    videoCam = cv2.VideoCapture(os.path.join(cfg.ROOT_DIR, args.video))
-    # videoCam = cv2.VideoCapture(0)
+    # videoCam = cv2.VideoCapture(os.path.join(cfg.ROOT_DIR, args.video))
+    videoCam = cv2.VideoCapture(0)
 
     while cv2.waitKey(1) != 0x20:
         success, frame = videoCam.read()
