@@ -62,7 +62,7 @@ __C.TRAIN.USE_FLIPPED = True
 __C.TRAIN.BBOX_THRESH = 0.5
 
 # Iterations between snapshots
-__C.TRAIN.SNAPSHOT_ITERS = 20
+__C.TRAIN.SNAPSHOT_ITERS = 10000
 # solver.prototxt specifies the snapshot path prefix, this adds an optional
 # infix to yield the path: <prefix>[_<infix>]_iters_XYZ.caffemodel
 __C.TRAIN.SNAPSHOT_INFIX = ''
