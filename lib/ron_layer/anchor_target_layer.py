@@ -25,7 +25,6 @@ class AnchorTargetLayer(caffe.Layer):
 
     def setup(self, bottom, top):
         layer_params = yaml.load(self.param_str)
-        #anchor_scales = [layer_params['scale']]
 
         params = layer_params['stride_scale_border_batchsize']
 
@@ -97,71 +96,35 @@ class AnchorTargetLayer(caffe.Layer):
                     np.ascontiguousarray(anchors, dtype=np.float),
                     np.ascontiguousarray(gt_boxes, dtype=np.float))
 
-        batch_gt_argmax_overlaps = batch_overlaps.argmax(axis=0)
-        #generate for each dim
-        all_labels = np.zeros((len(inds_inside) * self._ndim, ), dtype=np.float32)   
+        all_labels_top = np.zeros((self._ndim, 1, self._num_anchors * height, width), dtype = np.float32)
+
+        all_bbox_targets_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
+        all_bbox_inside_weights_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
+        all_bbox_outside_weights_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
 
         for i_dim in xrange(self._ndim):
             labels = np.ones((len(inds_inside), ), dtype=np.float32)  * -1      
 
             inds_i = np.where(dim_inds == i_dim)[0]
-            overlaps = batch_overlaps[:, inds_i]
-            argmax_overlaps = overlaps.argmax(axis=1)
-            max_overlaps = overlaps[np.arange(len(inds_inside)), argmax_overlaps]
-
-            gt_argmax_overlaps = batch_gt_argmax_overlaps[inds_i]
-
-            gt_max_overlaps = overlaps[gt_argmax_overlaps, np.arange(overlaps.shape[1])]
-            labels_gt_inds = np.where(gt_max_overlaps >  cfg.TRAIN.BG_THRESH_HI - 0.2)[0]
-            
-            box_max = gt_argmax_overlaps[labels_gt_inds] 
-            labels[(max_overlaps <  cfg.TRAIN.BG_THRESH_HI)&(max_overlaps > cfg.TRAIN.BG_THRESH_LO)] = 0
-
-            # fg label: for each gt, anchor with highest overlap when gt_argmax_overlaps > thresh
-            labels[box_max] = 1
-            # fg label: above threshold IOU
-            labels[max_overlaps >= cfg.TRAIN.FG_THRESH] = 1
-
-            all_labels[i_dim * len(inds_inside): (i_dim + 1) * len(inds_inside)] = labels 
-
-        fg_inds = np.where(all_labels == 1)[0]
-        
-        if len(fg_inds) > 0:
-            num_bg = len(fg_inds) *  (1.0 - cfg.TRAIN.FG_FRACTION) / (cfg.TRAIN.FG_FRACTION)
-        else:
-            num_bg = self._batch
-        
-
-        bg_inds = np.where(all_labels == 0)[0]
-        if len(bg_inds) > num_bg:
-            disable_inds = npr.choice(bg_inds, size=int(len(bg_inds) - num_bg), replace=False)
-            all_labels[disable_inds] = -1
-
-
-        all_labels_top = np.zeros((self._ndim, 1, self._num_anchors * height, width), dtype = np.float32)
-        
-        all_bbox_targets_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
-        all_bbox_inside_weights_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
-        all_bbox_outside_weights_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
-
-
-        for i_dim in xrange(self._ndim):
-            labels = all_labels[i_dim * len(inds_inside): (i_dim + 1) * len(inds_inside)]
-            inds_i = np.where(dim_inds == i_dim)[0]
             gt_boxes_i = gt_boxes[inds_i, :]
 
             overlaps = batch_overlaps[:, inds_i]
             argmax_overlaps = overlaps.argmax(axis=1)
-            
-            bbox_targets = np.zeros((len(inds_inside), 4), dtype=np.float32)
+            max_overlaps = overlaps[np.arange(len(inds_inside)), argmax_overlaps]
+
+
+            labels[(max_overlaps <  cfg.TRAIN.BG_THRESH_HI)] = 0
+
+            # fg label: above threshold IOU
+            labels[max_overlaps >= cfg.TRAIN.FG_THRESH] = 1
+
             bbox_inside_weights = np.zeros((len(inds_inside), 4), dtype=np.float32)
             bbox_outside_weights = np.zeros((len(inds_inside), 4), dtype=np.float32)
- 
-            bbox_targets = _compute_targets(anchors, gt_boxes_i[argmax_overlaps, :])            
+
+            bbox_targets = _compute_targets(anchors, gt_boxes_i[argmax_overlaps, :])
             bbox_inside_weights[labels == 1, :] = np.array(cfg.TRAIN.BBOX_INSIDE_WEIGHTS)
 
-            # uniform weighting of examples (given non-uniform sampling)
-            num_examples = np.sum(labels >= 0)
+            num_examples = np.sum(labels > 0)
             if num_examples < 1:
                num_examples = 1
             positive_weights = np.ones((1, 4)) * 1.0 / num_examples
@@ -169,8 +132,8 @@ class AnchorTargetLayer(caffe.Layer):
 
             bbox_outside_weights[labels == 1, :] = positive_weights
             bbox_outside_weights[labels == 0, :] = negative_weights
- 
-             # labels               
+
+             # labels
             labels = unmap(labels, total_anchors, inds_inside, fill= -1)
             labels = labels.reshape((1, height, width, self._num_anchors)).transpose(0, 3, 1, 2)
             labels = labels.reshape((1, 1, self._num_anchors * height, width))
@@ -187,6 +150,7 @@ class AnchorTargetLayer(caffe.Layer):
             all_bbox_targets_top[i_dim] = bbox_targets
             all_bbox_inside_weights_top[i_dim] = bbox_inside_weights
             all_bbox_outside_weights_top[i_dim] = bbox_outside_weights
+
 
         top[0].reshape(*all_labels_top.shape)
         top[0].data[...] = all_labels_top

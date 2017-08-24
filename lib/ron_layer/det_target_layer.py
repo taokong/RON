@@ -97,7 +97,8 @@ class DetTargetLayer(caffe.Layer):
         batch_gt_argmax_overlaps = batch_overlaps.argmax(axis=0)
 
         #generate for each dim
-        all_labels_ndim = np.zeros((len(inds_inside) * self._ndim, ), dtype=np.float32)   
+
+        all_labels_top = np.zeros((self._ndim, 1, self._num_anchors * height, width), dtype = np.float32)
         for i_dim in xrange(self._ndim):
             labels = np.ones((len(inds_inside), ), dtype=np.float32)  * -1     
             inds_i = np.where(dim_inds == i_dim)[0]
@@ -115,9 +116,7 @@ class DetTargetLayer(caffe.Layer):
 
             labels_gt_inds = np.where(gt_max_overlaps > cfg.TRAIN.BG_THRESH_HI)[0]
             labels_gt = gt_boxes_i[labels_gt_inds, 4]
-            gt_max_overlaps = gt_max_overlaps[labels_gt_inds]
 
-            max_overlaps_argsort = np.argsort(-max_overlaps)
             box_max = gt_argmax_overlaps[labels_gt_inds]
 
             labels[max_overlaps < cfg.TRAIN.BG_THRESH_HI] = 0
@@ -134,37 +133,9 @@ class DetTargetLayer(caffe.Layer):
             scores_i = scores[i_dim]
             ignore_inds = np.where(scores_i < self._score_thresh)
             labels_up[ignore_inds] = -1
-            labels_up = labels_up.transpose(1, 2, 0).reshape((-1,1)).flatten()
-            labels = labels_up[inds_inside]
+            labels_up = labels_up.reshape((1, 1, self._num_anchors * height, width))
+            all_labels_top[i_dim] = labels_up
 
-            all_labels_ndim[i_dim * len(inds_inside): (i_dim + 1) * len(inds_inside)] = labels.copy()
-
-        fg_inds = np.where(all_labels_ndim > 0)[0]
-        if len(fg_inds) > 0:
-            num_bg = len(fg_inds) *  (1.0 - cfg.TRAIN.FG_FRACTION) / (cfg.TRAIN.FG_FRACTION)
-        else:
-            num_bg = self._batch
-     
-        bg_inds = np.where(all_labels_ndim == 0)[0]
-        if len(bg_inds) > num_bg:
-            disable_inds = npr.choice(bg_inds, size=int(len(bg_inds) - num_bg), replace=False)
-            all_labels_ndim[disable_inds] = -1
-
-        all_labels_top = np.zeros((self._ndim, 1, self._num_anchors * height, width), dtype = np.float32)
-        all_bbox_targets_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
-        all_bbox_inside_weights_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
-        all_bbox_outside_weights_top = np.zeros((self._ndim, self._num_anchors*4, height, width), dtype = np.float32)
-
-
-        for i_dim in xrange(self._ndim):
-            labels = all_labels_ndim[i_dim * len(inds_inside): (i_dim + 1) * len(inds_inside)]
-
-            labels = unmap(labels, total_anchors, inds_inside, fill= -1)
-            # labels
-            labels = labels.reshape((1, height, width, self._num_anchors)).transpose(0, 3, 1, 2) 
-            labels = labels.reshape((1, 1, self._num_anchors * height, width))
-
-            all_labels_top[i_dim] = labels
         
         if DEBUG:
             print 'det: num_positive', np.sum(all_labels_top > 0)

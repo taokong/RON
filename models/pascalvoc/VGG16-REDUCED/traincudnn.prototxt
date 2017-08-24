@@ -1533,13 +1533,150 @@ layer {
 }
 
 
-
-
 layer {
-  name: "rpn_loss_cls_7"
+  name: "rpn_loss_cls_7_tmp"
   type: "SoftmaxWithLoss"
   bottom: "rpn_cls_score_reshape_7"
   bottom: "rpn_labels_7"
+  propagate_down: 0
+  propagate_down: 0
+  top: "rpn_loss_cls_7_tmp"
+  top: "rpn_cls_prob_7_tmp"
+  top: "rpn_loss_ohem_7"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+layer {
+  name: "rpn_loss_cls_6_tmp"
+  type: "SoftmaxWithLoss"
+  bottom: "rpn_cls_score_reshape_6"
+  bottom: "rpn_labels_6"
+  propagate_down: 0
+  propagate_down: 0
+  top: "rpn_loss_cls_6_tmp"
+  top: "rpn_cls_prob_6_tmp"
+  top: "rpn_loss_ohem_6"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+layer {
+  name: "rpn_loss_cls_5_tmp"
+  type: "SoftmaxWithLoss"
+  bottom: "rpn_cls_score_reshape_5"
+  bottom: "rpn_labels_5"
+  propagate_down: 0
+  propagate_down: 0
+  top: "rpn_loss_cls_5_tmp"
+  top: "rpn_cls_prob_5_tmp"
+  top: "rpn_loss_ohem_5"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+layer {
+  name: "rpn_loss_cls_4_tmp"
+  type: "SoftmaxWithLoss"
+  bottom: "rpn_cls_score_reshape_4"
+  bottom: "rpn_labels_4"
+  propagate_down: 0
+  propagate_down: 0
+  top: "rpn_loss_cls_4_tmp"
+  top: "rpn_cls_prob_4_tmp"
+  top: "rpn_loss_ohem_4"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+##########OHEM##################
+layer {
+  name: "rpn_newlabels"
+  type: "Python"
+  bottom: "rpn_loss_ohem_7"
+  bottom: "rpn_labels_7"
+  bottom: "rpn_loss_cls_7_tmp"
+  bottom: "rpn_cls_prob_7_tmp"
+  top: "rpn_labels_7_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+layer {
+  name: "rpn_newlabels"
+  type: "Python"
+  bottom: "rpn_loss_ohem_6"
+  bottom: "rpn_labels_6"
+  bottom: "rpn_loss_cls_6_tmp"
+  bottom: "rpn_cls_prob_6_tmp"
+  top: "rpn_labels_6_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+
+layer {
+  name: "rpn_newlabels"
+  type: "Python"
+  bottom: "rpn_loss_ohem_5"
+  bottom: "rpn_labels_5"
+  bottom: "rpn_loss_cls_5_tmp"
+  bottom: "rpn_cls_prob_5_tmp"
+  top: "rpn_labels_5_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+layer {
+  name: "rpn_newlabels"
+  type: "Python"
+  bottom: "rpn_loss_ohem_4"
+  bottom: "rpn_labels_4"
+  bottom: "rpn_loss_cls_4_tmp"
+  bottom: "rpn_cls_prob_4_tmp"
+  top: "rpn_labels_4_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+
+layer {
+  name: "rpn_loss_cls_7_ohem"
+  type: "SoftmaxWithLoss"
+  bottom: "rpn_cls_score_reshape_7"
+  bottom: "rpn_labels_7_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "rpn_loss_cls_7"
@@ -1551,10 +1688,10 @@ layer {
 }
 
 layer {
-  name: "rpn_loss_cls_6"
+  name: "rpn_loss_cls_6_ohem"
   type: "SoftmaxWithLoss"
   bottom: "rpn_cls_score_reshape_6"
-  bottom: "rpn_labels_6"
+  bottom: "rpn_labels_6_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "rpn_loss_cls_6"
@@ -1566,10 +1703,10 @@ layer {
 }
 
 layer {
-  name: "rpn_loss_cls_5"
+  name: "rpn_loss_cls_5_ohem"
   type: "SoftmaxWithLoss"
   bottom: "rpn_cls_score_reshape_5"
-  bottom: "rpn_labels_5"
+  bottom: "rpn_labels_5_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "rpn_loss_cls_5"
@@ -1581,10 +1718,10 @@ layer {
 }
 
 layer {
-  name: "rpn_loss_cls_4"
+  name: "rpn_loss_cls_4_ohem"
   type: "SoftmaxWithLoss"
   bottom: "rpn_cls_score_reshape_4"
-  bottom: "rpn_labels_4"
+  bottom: "rpn_labels_4_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "rpn_loss_cls_4"
@@ -1595,6 +1732,7 @@ layer {
   }
 }
 
+############################################
 
 layer {
   name: "rpn_loss_bbox_7"
@@ -1645,12 +1783,14 @@ layer {
 }
 
 ##proposals###
-
 layer {
   name: "rpn_cls_prob_7"
   type: "Softmax"
   bottom: "rpn_cls_score_reshape_7"
   top: "rpn_cls_prob_7"
+  softmax_param {
+   engine: CUDNN
+  }
 }
 
 layer {
@@ -1658,6 +1798,9 @@ layer {
   type: "Softmax"
   bottom: "rpn_cls_score_reshape_6"
   top: "rpn_cls_prob_6"
+  softmax_param {
+   engine: CUDNN
+  }
 }
 
 layer {
@@ -1665,6 +1808,9 @@ layer {
   type: "Softmax"
   bottom: "rpn_cls_score_reshape_5"
   top: "rpn_cls_prob_5"
+  softmax_param {
+   engine: CUDNN
+  }
 }
 
 layer {
@@ -1672,8 +1818,10 @@ layer {
   type: "Softmax"
   bottom: "rpn_cls_score_reshape_4"
   top: "rpn_cls_prob_4"
+  softmax_param {
+   engine: CUDNN
+  }
 }
-
 layer {
   name: 'rpn_cls_prob_reshape_7'
   type: 'Reshape'
@@ -1707,6 +1855,7 @@ layer {
 
 
 ### for detection ##
+
 layer {
   name: "det_cls_score_71"
   type: "Convolution"
@@ -2474,7 +2623,7 @@ layer {
   python_param {
     module: 'ron_layer.det_target_layer'
     layer: 'DetTargetLayer'
-    param_str: "'stride_scale_border_batchsize_numcls': 64,7,32,256,21"   
+    param_str: "'stride_scale_border_batchsize_numcls': 64,7,32,256,21"
   }
 }
 
@@ -2521,10 +2670,148 @@ layer {
 }
 
 layer {
-  name: "det_loss_cls_7"
+  name: "det_loss_cls_7_tmp"
   type: "SoftmaxWithLoss"
   bottom: "det_cls_score_reshape_7"
   bottom: "det_labels_7"
+  propagate_down: 0
+  propagate_down: 0
+  top: "det_loss_cls_7_tmp"
+  top: "det_cls_prob_7_tmp"
+  top: "det_loss_ohem_7"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+layer {
+  name: "det_loss_cls_6_tmp"
+  type: "SoftmaxWithLoss"
+  bottom: "det_cls_score_reshape_6"
+  bottom: "det_labels_6"
+  propagate_down: 0
+  propagate_down: 0
+  top: "det_loss_cls_6_tmp"
+  top: "det_cls_prob_6_tmp"
+  top: "det_loss_ohem_6"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+layer {
+  name: "det_loss_cls_5_tmp"
+  type: "SoftmaxWithLoss"
+  bottom: "det_cls_score_reshape_5"
+  bottom: "det_labels_5"
+  propagate_down: 0
+  propagate_down: 0
+  top: "det_loss_cls_5_tmp"
+  top: "det_cls_prob_5_tmp"
+  top: "det_loss_ohem_5"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+layer {
+  name: "det_loss_cls_4_tmp"
+  type: "SoftmaxWithLoss"
+  bottom: "det_cls_score_reshape_4"
+  bottom: "det_labels_4"
+  propagate_down: 0
+  propagate_down: 0
+  top: "det_loss_cls_4_tmp"
+  top: "det_cls_prob_4_tmp"
+  top: "det_loss_ohem_4"
+  loss_weight: 0
+  loss_weight: 0
+  loss_weight: 0
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+
+
+layer {
+  name: "det_newlabels"
+  type: "Python"
+  bottom: "det_loss_ohem_7"
+  bottom: "det_labels_7"
+  bottom: "det_loss_cls_7_tmp"
+  bottom: "det_cls_prob_7_tmp"
+  top: "det_labels_7_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+layer {
+  name: "det_newlabels"
+  type: "Python"
+  bottom: "det_loss_ohem_6"
+  bottom: "det_labels_6"
+  bottom: "det_loss_cls_6_tmp"
+  bottom: "det_cls_prob_6_tmp"
+  top: "det_labels_6_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+layer {
+  name: "det_newlabels"
+  type: "Python"
+  bottom: "det_loss_ohem_5"
+  bottom: "det_labels_5"
+  bottom: "det_loss_cls_5_tmp"
+  bottom: "det_cls_prob_5_tmp"
+  top: "det_labels_5_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+layer {
+  name: "det_newlabels"
+  type: "Python"
+  bottom: "det_loss_ohem_4"
+  bottom: "det_labels_4"
+  bottom: "det_loss_cls_4_tmp"
+  bottom: "det_cls_prob_4_tmp"
+  top: "det_labels_4_ohem"
+  python_param {
+    module: 'ron_layer.ohem_rpn'
+    layer: 'OHEMRpnLayer'
+    param_str: "'sample_num': 4"
+  }
+}
+
+
+layer {
+  name: "det_loss_cls_7"
+  type: "SoftmaxWithLoss"
+  bottom: "det_cls_score_reshape_7"
+  bottom: "det_labels_7_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "det_loss_cls_7"
@@ -2535,11 +2822,12 @@ layer {
   }
 }
 
+
 layer {
   name: "det_loss_cls_6"
   type: "SoftmaxWithLoss"
   bottom: "det_cls_score_reshape_6"
-  bottom: "det_labels_6"
+  bottom: "det_labels_6_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "det_loss_cls_6"
@@ -2554,7 +2842,7 @@ layer {
   name: "det_loss_cls_5"
   type: "SoftmaxWithLoss"
   bottom: "det_cls_score_reshape_5"
-  bottom: "det_labels_5"
+  bottom: "det_labels_5_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "det_loss_cls_5"
@@ -2569,7 +2857,7 @@ layer {
   name: "det_loss_cls_4"
   type: "SoftmaxWithLoss"
   bottom: "det_cls_score_reshape_4"
-  bottom: "det_labels_4"
+  bottom: "det_labels_4_ohem"
   propagate_down: 1
   propagate_down: 0
   top: "det_loss_cls_4"

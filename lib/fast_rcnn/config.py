@@ -52,8 +52,8 @@ __C.TRAIN.DET_POSITIVE_OVERLAP = 0.6
 # Overlap threshold for a ROI to be considered background (class = 0 if
 # overlap in [LO, HI))
 __C.TRAIN.BG_THRESH_HI = 0.3
-__C.TRAIN.BG_THRESH_LO = 0.001
-__C.TRAIN.PROB = 0.03
+__C.TRAIN.BG_THRESH_LO = 0.0
+__C.TRAIN.PROB = 0.05
 # Use horizontally-flipped images during training?
 __C.TRAIN.USE_FLIPPED = True
 
@@ -62,7 +62,7 @@ __C.TRAIN.USE_FLIPPED = True
 __C.TRAIN.BBOX_THRESH = 0.5
 
 # Iterations between snapshots
-__C.TRAIN.SNAPSHOT_ITERS = 20
+__C.TRAIN.SNAPSHOT_ITERS = 10000
 # solver.prototxt specifies the snapshot path prefix, this adds an optional
 # infix to yield the path: <prefix>[_<infix>]_iters_XYZ.caffemodel
 __C.TRAIN.SNAPSHOT_INFIX = ''
