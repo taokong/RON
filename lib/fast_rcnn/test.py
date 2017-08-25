@@ -93,8 +93,8 @@ def im_detect(net, ims):
     pred_boxes = np.concatenate((pred_boxes, pred_boxes5), axis = 1)
     pred_boxes = np.concatenate((pred_boxes, pred_boxes4), axis = 1)     
 
-
     return scores, pred_boxes
+
 def vis_detections(im, class_name, dets, thresh=0.5):
     """Visual debugging of detections."""
 

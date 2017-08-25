@@ -45,19 +45,19 @@ class OHEMRpnLayer(caffe.Layer):
 
         all_labels = all_labels_up.flatten()
 
-        label_inds = np.where(all_labels >=0)[0]
+        background_inds = np.where(all_labels == 0)[0]
 
-        gt_num = len(np.where(all_labels >0)[0])
+        gt_num = len(np.where(all_labels > 0)[0])
 
         sample_num = gt_num * self._sample_num
 
-        if(sample_num < len(label_inds)):
+        if(sample_num < len(background_inds)):
             all_losses_up = bottom[0].data
-            all_losses = all_losses_up.flatten()[label_inds]
+            all_losses = all_losses_up.flatten()[background_inds]
 
             loss_flag_value = np.sort(-all_losses)[sample_num] * -1
 
-            ignore_inds = np.where((all_losses_up < loss_flag_value) & (all_labels_up >= 0))
+            ignore_inds = np.where((all_losses_up < loss_flag_value) & (all_labels_up == 0))
 
             all_labels_up[ignore_inds] = -1
 

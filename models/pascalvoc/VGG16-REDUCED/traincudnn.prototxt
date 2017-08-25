@@ -1621,7 +1621,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -1636,7 +1636,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -1652,7 +1652,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -1667,7 +1667,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -2757,7 +2757,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -2772,7 +2772,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -2787,7 +2787,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
@@ -2802,7 +2802,7 @@ layer {
   python_param {
     module: 'ron_layer.ohem_rpn'
     layer: 'OHEMRpnLayer'
-    param_str: "'sample_num': 4"
+    param_str: "'sample_num': 3"
   }
 }
 
