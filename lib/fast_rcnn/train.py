@@ -47,8 +47,7 @@ class SolverWrapper(object):
 
 
         infix = '_' + str(cfg.TRAIN.SCALES[0])
-        filename = (self.solver_param.snapshot_prefix + infix +
-                    '_iter_{:d}'.format(self.solver.iter) + '.caffemodel')
+        filename = (self.solver_param.snapshot_prefix + infix + '.caffemodel')
         filename = os.path.join(self.output_dir, filename)
 
         net.save(str(filename))

@@ -131,12 +131,20 @@ class imdb(object):
 
         return ar, gt_overlaps, recalls, thresholds
 
+    def _get_heights(self):
+      return [PIL.Image.open(self.image_path_at(i)).size[1]
+              for i in xrange(self.num_images)]
+    def _get_shapes(self):
+        return [PIL.Image.open(self.image_path_at(i)).size[0:2]
+              for i in xrange(self.num_images)]
 
     def append_flipped_images(self):
         num_images = len(self.roidb)
         widths = [PIL.Image.open(self.image_path_at(i)).size[0]
                   for i in xrange(num_images)]
         for i in xrange(num_images):
+            if(i % 1000 == 0):
+                print 'appending:', i, '/', num_images
             boxes = self.roidb[i]['boxes'].copy()
             oldx1 = boxes[:, 0].copy()
             oldx2 = boxes[:, 2].copy()

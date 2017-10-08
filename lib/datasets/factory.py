@@ -11,7 +11,12 @@ __sets = {}
 import datasets.pascal_voc
 import datasets.coco
 import numpy as np
+from datasets.ai_challenger import ai_challenger
 
+for year in ['20170909', '20170911', '0712']:
+    for split in ['train', 'validation']:
+        name = 'ai_{}_{}'.format(year, split)
+        __sets[name] = (lambda split=split, year=year: ai_challenger(split, year))
 
 # Set up voc_<year>_<split> using selective search "fast" mode
 for year in ['2007', '2012']:

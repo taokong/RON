@@ -28,13 +28,13 @@ __C.DIV = 64
 
 # Scales to use during training (can list multiple scales)
 # Each scale is the pixel size of an image's shortest side
-__C.TRAIN.SCALES = (320,256)
+__C.TRAIN.SCALES = (320,)
 __C.TRAIN.CROPS = (1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4)
-__C.TRAIN.EXPENSION = True
-__C.TRAIN.EXPENSION_RAND = True
+__C.TRAIN.EXPENSION = False
+__C.TRAIN.EXPENSION_RAND = False
 __C.TRAIN.EXPENSION_SCALE = 2.0
 # data augmentation
-__C.TRAIN.MOREAUGMENT = True
+__C.TRAIN.MOREAUGMENT = False
 
 __C.TRAIN.COLORDISTORATION = True
 __C.TRAIN.COLOR_ENHANCE_HI = 1.5
@@ -55,21 +55,21 @@ __C.TRAIN.BG_THRESH_HI = 0.3
 __C.TRAIN.BG_THRESH_LO = 0.001
 __C.TRAIN.PROB = 0.03
 # Use horizontally-flipped images during training?
-__C.TRAIN.USE_FLIPPED = True
+__C.TRAIN.USE_FLIPPED = False
 
 # Overlap required between a ROI and ground-truth box in order for that ROI to
 # be used as a bounding-box regression training example
 __C.TRAIN.BBOX_THRESH = 0.5
 
 # Iterations between snapshots
-__C.TRAIN.SNAPSHOT_ITERS = 20
+__C.TRAIN.SNAPSHOT_ITERS = 1000
 # solver.prototxt specifies the snapshot path prefix, this adds an optional
 # infix to yield the path: <prefix>[_<infix>]_iters_XYZ.caffemodel
 __C.TRAIN.SNAPSHOT_INFIX = ''
 
 # Use a prefetch thread in roi_data_layer.layer
 # So far I haven't found this useful; likely more engineering work is required
-__C.TRAIN.USE_PREFETCH = False
+__C.TRAIN.USE_PREFETCH = True
 # Normalize the targets (subtract empirical mean, divide by empirical stddev)
 __C.TRAIN.BBOX_NORMALIZE_TARGETS = True
 # Deprecated (inside weights)
