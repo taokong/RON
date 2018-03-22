@@ -5,7 +5,7 @@ The code is modified from [py-faster-rcnn](https://github.com/rbgirshick/py-fast
 You can use the code to train/evaluate a network for object detection task. 
 For more details, please refer to our [CVPR paper](http://openaccess.thecvf.com/content_cvpr_2017/papers/Kong_RON_Reverse_Connection_CVPR_2017_paper.pdf).
 
-#### There is also a tensorflow re-implementation of RON at [RON_Tensorflow](https://github.com/HiKapok/RON_Tensorflow), thanks [@HiKapok](https://github.com/HiKapok)!
+#### ***There is also a tensorflow re-implementation of RON at [RON_Tensorflow](https://github.com/HiKapok/RON_Tensorflow), thanks [@HiKapok](https://github.com/HiKapok)!
 ### Citing RON
 
 If you find RON useful in your research, please consider citing:
